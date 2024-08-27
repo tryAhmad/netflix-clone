@@ -1,29 +1,51 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./TitleCards.css";
 import cards_data from "../../assets/cards/Cards_data";
 
-const TitleCards = ({title = "Popular", category}) => {
+const TitleCards = ({ title = "Popular", category }) => {
 
-    const cardRef = useRef();
+  const [apiData, setApiData] = useState([]);
 
-    const handleWheel = (e) => {
-        e.preventDefault();
-        cardRef.current.scrollLeft += e.deltaY;
-    }
+  const cardRef = useRef();
 
-    useEffect(() => {
-        cardRef.current.addEventListener("wheel", handleWheel);
-    },[])
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0NTE2Zjg2NTk4NDJhM2M5YjFlZWQ5YTYxNmU1YWNjNSIsIm5iZiI6MTcyNDc3MDA0Ny4zNTkwMzMsInN1YiI6IjY2Y2RlNWNlNTczNmFmYmZiMTlkYjIyNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.v1ZV5uS_Z9m_p6VBpULWq-ZDTkM1RzuMDyrEhgGBVJs",
+    },
+  };
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+    cardRef.current.scrollLeft += e.deltaY;
+  };
+
+  useEffect(() => {
+    fetch(
+      "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => setApiData(response.results))
+      .catch((err) => console.error(err));
+
+    cardRef.current.addEventListener("wheel", handleWheel);
+  }, []);
 
   return (
     <div className="title-cards">
       <h2>{title}</h2>
-      <div className="cards-list">
-        {cards_data.map((card, index) => {
+      <div className="cards-list" ref={cardRef}>
+        {apiData.map((card, index) => {
           return (
-            <div key={index} className="card" ref={cardRef} >
-              <img src={card.image} alt={card.title} />
-              <p>{card.name}</p>
+            <div key={index} className="card">
+              <img
+                src={`https://image.tmdb.org/t/p/w500` + card.backdrop_path}
+                alt={card.title}
+              />
+              <p>{card.original_title}</p>
             </div>
           );
         })}
