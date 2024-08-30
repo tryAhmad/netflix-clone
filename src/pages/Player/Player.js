@@ -4,8 +4,8 @@ import back_arrow from "../../assets/back_arrow_icon.png";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Player = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [apiData, setApidata] = useState({
     name: "",
     key: "",
@@ -34,7 +34,13 @@ const Player = () => {
 
   return (
     <div className="player">
-      <img src={back_arrow} alt="back" onClick={()=>{navigate('/')}} />
+      <img
+        src={back_arrow}
+        alt="back"
+        onClick={() => {
+          navigate("/");
+        }}
+      />
       <iframe
         width="90%"
         height="90%"
