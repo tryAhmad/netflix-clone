@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Player.css";
 import back_arrow from "../../assets/back_arrow_icon.png";
 import { useNavigate, useParams } from "react-router-dom";
@@ -30,7 +30,7 @@ const Player = () => {
       .then((response) => response.json())
       .then((response) => setApidata(response.results[0]))
       .catch((err) => console.error(err));
-  }, [id,options]);
+  }, []);
 
   return (
     <div className="player">
