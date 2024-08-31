@@ -4,7 +4,7 @@ A Netflix clone web application built using React. It features a login page, hom
 
 ## Live Demo
 
-Check out the live demo of the project [here](https://tryahmad-netclone.netlify.app).
+Check out the live demo of the project [here](https://tryahmad-netclone.netlify.app/).
 
 ## Features
 
